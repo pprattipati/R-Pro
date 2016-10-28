@@ -1,1 +1,42 @@
+#-----Titanic Problem-----------
+
 getwd()
+setwd ("E:/Data Science/R/Titatnic")
+
+titanic_train=read.csv("train.csv")
+
+dim(titanic_train)
+class(titanic_train)
+str(titanic_train)
+
+titanic_train$Pclass # To display specific column data
+
+#Type Casting
+str(titanic_train)
+titanic_train$Survived = as.factor(titanic_train$Survived)
+titanic_train$Survived
+
+#xtabs-----
+
+xtabs(~Sex+Survived,titanic_train)
+
+# Making all Females survived
+titanic_train$Survived=ifelse(titanic_train$Sex=="female",1,0)
+
+xtabs(~Sex+Survived,titanic_train)
+
+# Making all Females survived based on Pclass
+
+xtabs(~Pclass+Survived+Sex,titanic_train)
+
+xtabs(~Pclass+Sex+Embarked+Survived,titanic_train)
+summary(titanic_test)
+str(titanic_test)
+
+titanic_test$Survived=ifelse(titanic_test$Sex=="female",ifelse(titanic_test$Pclass=='3'&titanic_test$Embarked=='s',0,1),0)
+write.csv(titanic_test$Survived)
+dim(titanic_test)
+str(titanic_test)
+write.csv(titanic_test[,c("PassengerId","Survived")],"survived.csv",row.names = F)
+#Complete file path
+write.csv(titanic_test[,c("PassengerId","Survived")],"E:/Data Science/R/Titatnic/survived.csv",row.names = F)
