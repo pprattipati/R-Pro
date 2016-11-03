@@ -1,0 +1,55 @@
+#EDA Examples
+
+cat_2015 = c(100,99,98,98,97,96)
+cat_2016 = c(80,79,79,78,78,77)
+
+str(cat_2015)
+summary(cat_2015)
+dim(cat_2015) # error
+
+
+#Z scores
+cat_2015_Z = (cat_2015-mean(cat_2015) )/ sd(cat_2015)
+cat_2016_Z = (cat_2016-mean(cat_2016))/sd(cat_2016)
+
+cat_scores = data.frame(cat_2015,cat_2015_Z,cat_2016,cat_2016_Z)
+
+# SD units function in R ( Z scores using R)
+cat_scores = data.frame(cat_2015,cat_2016)
+#Center
+#Preobj=preProcess(cat_scores,method=c("center"))
+Preobj=preProcess(cat_scores,method = c("center","scale"))
+cat_scores_C = predict(Preobj,cat_scores)
+Preobj$mean
+Preobj$std
+
+summary(titanic_train$Survived)
+str(titanic_train)
+#Bar chart for categotrical variable
+#Explore single continues variable
+x11()
+ggplot(titanic_train)+geom_bar(aes(x=Survived))
+
+#Explore multi-variate relation between categorical variable
+xtabs(~Pclass+Survived,titanic_train)
+#Bar chart with color
+ggplot(titanic_train)+geom_bar(aes(x=Sex,fill=Survived))
+ggplot(titanic_train)+geom_bar(aes(x=Pclass,fill=Survived))
+
+#FACET
+X11()
+xtabs(~Survived+Pclass+Sex,titanic_train)
+ggplot(titanic_train)+ geom_bar(aes(x=Sex,fill=Survived)) + facet_grid(Pclass~.)
+
+
+#Categorical & Continues variable relationship
+ggplot(titanic_train)+geom_boxplot(aes(x=Survived,y=Fare))
+ggplot(titanic_train)+geom_histogram(aes(x=Fare))+ facet_grid(Survived~Sex)
+
+#Continuous - Continuous
+ggplot(titanic_train)+geom_point(aes(x=Fare,y=Age))
+
+
+#N-C relationships
+ggplot(titanic_train) + geom_boxplot(aes(x = Survived, y = Age))
+ggplot(titanic_train) + geom_histogram(aes(x = Age),fill = "white", colour = "black") + facet_grid(Survived ~ .)
